@@ -1,7 +1,11 @@
 package com.example.android.sunshine.app;
 
 import android.content.Intent;
+import android.content.SharedPreferences;
+import android.net.Uri;
 import android.os.Bundle;
+import android.preference.Preference;
+import android.preference.PreferenceManager;
 import android.support.v7.app.ActionBarActivity;
 import android.support.v4.app.Fragment;
 import android.util.Log;
@@ -12,6 +16,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
 import android.widget.ListView;
+import android.widget.Toast;
 
 import java.io.BufferedReader;
 import java.io.IOException;
@@ -27,7 +32,7 @@ import java.util.List;
 public class MainActivity extends ActionBarActivity {
 
 
-
+    private final String LOG_TAG = MainActivity.class.getSimpleName();
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -57,6 +62,24 @@ public class MainActivity extends ActionBarActivity {
         if (id == R.id.action_settings) {
             startActivity(new Intent(this, SettingsActivity.class));
             return true;
+        }
+        if(id==R.id.action_map){
+            SharedPreferences sharedPreference = PreferenceManager.getDefaultSharedPreferences(this);
+            String location = sharedPreference.getString(getString(R.string.pref_location_key), getString(R.string.pref_location_default));
+
+            Uri geoLocation = Uri.parse("geo:0,0?").buildUpon()
+                    .appendQueryParameter("q",location)
+                    .build();
+
+            Intent geoIntent = new Intent(Intent.ACTION_VIEW);
+            geoIntent.setData(geoLocation);
+            if(geoIntent.resolveActivity(getPackageManager())!= null){
+                startActivity(geoIntent);
+            }else{
+                String msg = "Could not call " + location + ". No Map activity found";
+                Log.d(LOG_TAG, msg);
+                Toast.makeText(this,msg,Toast.LENGTH_SHORT).show();
+            }
         }
 
         return super.onOptionsItemSelected(item);
