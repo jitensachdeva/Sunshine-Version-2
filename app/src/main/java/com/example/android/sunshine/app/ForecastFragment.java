@@ -265,11 +265,27 @@ public class ForecastFragment extends Fragment {
          */
         private String formatHighLows(double high, double low) {
             // For presentation, assume the user doesn't care about tenths of a degree.
+
+
+            final String METRIC_UNIT = getString(R.string.pref_unit_metric);
+            final String IMPERIAL_UNIT = getString(R.string.pref_unit_imperial);
+
+            SharedPreferences sharedPreferences = PreferenceManager.getDefaultSharedPreferences(getActivity());
+            String unitType = sharedPreferences.getString(getString(R.string.pref_unit_key), METRIC_UNIT);
+            if(unitType.equals(IMPERIAL_UNIT)){
+                high = converToImperial(high);
+                low = converToImperial(low);
+            }else if(!unitType.equals(METRIC_UNIT)){
+                Log.d(LOG_TAG,"Unit type not found -" + unitType);
+            }
             long roundedHigh = Math.round(high);
             long roundedLow = Math.round(low);
-
             String highLowStr = roundedHigh + "/" + roundedLow;
             return highLowStr;
+        }
+
+        private double converToImperial(double tempInMetric) {
+            return (tempInMetric*1.8) +32;
         }
 
     }

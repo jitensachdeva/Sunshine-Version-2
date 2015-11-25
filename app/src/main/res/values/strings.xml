@@ -14,5 +14,11 @@
     <string name="pref_location_key" translatable="false">location</string>
     <string name="pref_location_default" translatable="false">94043</string>
 
+    <string name="pref_unit_label">Temprature Units</string>
+    <string name="pref_unit_key">unit</string>
+    <string name="pref_unit_selection_label">Temprature Units</string>
+    <string name="pref_unit_imperial">P</string>
+    <string name="pref_unit_metric">M</string>
+
 
 </resources>
