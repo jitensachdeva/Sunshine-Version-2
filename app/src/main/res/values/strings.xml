@@ -20,6 +20,7 @@
     <string name="pref_unit_imperial">P</string>
     <string name="pref_unit_metric">M</string>
     <string name="action_map">Map Location</string>
+    <string name="action_share">Share</string>
 
 
 </resources>

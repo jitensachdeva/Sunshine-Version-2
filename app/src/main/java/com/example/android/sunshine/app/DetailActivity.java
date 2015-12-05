@@ -15,10 +15,6 @@ public class DetailActivity extends ActionBarActivity {
         setContentView(R.layout.activity_detail);
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
 
-        Intent intent = getIntent();
-        String message = intent.getStringExtra(Intent.EXTRA_TEXT);
-        TextView textView = (TextView) findViewById(R.id.forecast_txt);
-        textView.setText(message);
     }
 
     @Override
